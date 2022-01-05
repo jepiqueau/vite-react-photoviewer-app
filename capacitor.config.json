@@ -1,0 +1,13 @@
+{
+  "appId": "com.jeep.app.vite.react.photoviewer",
+  "appName": "vite-react-photoviewer-app",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "dist",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {}
+}

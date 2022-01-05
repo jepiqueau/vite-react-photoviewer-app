@@ -1,0 +1,23 @@
+{
+  "name": "vite-react-photoviewer-app",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@capacitor-community/photoviewer": "^1.0.5",
+    "@capacitor/android": "^3.3.3",
+    "@capacitor/core": "^3.3.3",
+    "@capacitor/ios": "^3.3.3",
+    "jeep-photoviewer": "^1.0.3",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^3.3.3",
+    "@vitejs/plugin-react": "^1.0.7",
+    "vite": "^2.7.2"
+  }
+}

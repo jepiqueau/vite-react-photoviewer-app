@@ -1,0 +1,6 @@
+[
+	{
+		"pkg": "@capacitor-community/photoviewer",
+		"classpath": "com.getcapacitor.community.media.photoviewer.PhotoViewerPlugin"
+	}
+]
