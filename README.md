@@ -36,7 +36,6 @@ npx cap copy
 
 ### BROWSER
 
-Does not work fully on the web will requires an update of the `jeep-photoviewer` Stencil component
 ```
 npm run dev
 ```
