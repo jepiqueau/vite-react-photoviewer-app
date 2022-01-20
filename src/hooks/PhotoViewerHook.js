@@ -16,14 +16,16 @@ const usePhotoViewer = () => {
                 return { value: null };
             }
         });
-        const show = useCallback(async (images, options) => {
+        const show = useCallback(async (images, mode, startFrom, options) => {
             if (images == null || images.length === 0) {
                 return Promise.reject(new Error('Must provide an image or an image Array '));
             }
-            let opts = {images: images};
+            let opts = {images: images, mode: mode, startFrom: startFrom};
+
             if (options != null && Object.keys(options).length != 0 ) {
                 opts.options = options;
             }
+            console.log(`opts: ${JSON.stringify(opts)}`)
             const r = await PhotoViewer.show(opts);
             if (r) {
                 if(r.result) {

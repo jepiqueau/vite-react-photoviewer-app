@@ -7,16 +7,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@capacitor-community/photoviewer": "^1.0.7",
-    "@capacitor/android": "^3.3.3",
-    "@capacitor/core": "^3.3.3",
-    "@capacitor/ios": "^3.3.3",
-    "jeep-photoviewer": "^1.0.5",
+    "@capacitor-community/photoviewer": "^1.0.8",
+    "@capacitor/android": "~3.3.4",
+    "@capacitor/core": "~3.3.4",
+    "@capacitor/ios": "~3.3.4",
+    "jeep-photoviewer": "^1.0.9",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
-    "@capacitor/cli": "^3.3.3",
+    "@capacitor/cli": "~3.3.4",
     "@vitejs/plugin-react": "^1.0.7",
     "vite": "^2.7.2"
   }

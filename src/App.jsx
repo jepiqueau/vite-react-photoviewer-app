@@ -28,31 +28,42 @@ function App() {
     options.compressionquality = 0.6;
     options.movieoptions = {mode: 'portrait', imagetime: 3};
 
-  const [mode, setMode] = useState("One");
+  const [mode, setMode] = useState("one");
+  const [startFrom, setStartFrom] = useState(0);
+  const [isStart, setIsStart] = useState(true);
   const changeMode = (mode) => {
-    if(mode === 'One') setMode("Gallery");
-    if(mode === 'Gallery') setMode("One");
+    if(mode === 'one') {
+      setMode("gallery");
+      setIsStart(false);
+    }
+    if(mode === 'gallery'){
+      setMode("slider");
+      setIsStart(true);
+    }
+    if(mode === 'slider') setMode("one");
+  }
+  const changeStartFrom = (startFrom) => {
+    if( startFrom < imageList.length) {
+      setStartFrom(startFrom +1);
+    } else {
+      setStartFrom(0);
+    }
   }
   const renderComponent = () => {
     let attachment = {};
-    if (mode === "One") {
+    if (mode === "one" || mode === "slider") {
       options.title = false;
-      attachment.imageList = [imageList[0]];
-      attachment.options = options;
-      return (
-        <PhotoViewer attachment={attachment} ></PhotoViewer>
-      )
-    } else if (mode === "Gallery") {
+      attachment.startFrom = startFrom;
+    } else if (mode === "gallery") {
       options.title = true;
       options.spancount = 3;
-      attachment.imageList = imageList;
-      attachment.options = options;
-      return (
-        <PhotoViewer attachment={attachment} ></PhotoViewer>
-      )
-    } else {
-      return null
     }
+    attachment.imageList = imageList;
+    attachment.mode = mode;
+    attachment.options = options;
+    return (
+        <PhotoViewer attachment={attachment} ></PhotoViewer>
+      )  
   }
   return (
     <div className="App">
@@ -60,9 +71,15 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <p>Hello Vite + React!</p>
         <p>
-          <button type="button" onClick={() => changeMode(mode)}>
+         <button type="button" onClick={() => changeMode(mode)}>
             mode is: {mode}
           </button>
+          {isStart &&
+          <button type="button" onClick={() => changeStartFrom(startFrom)}>
+          startFrom is: {startFrom}
+        </button>
+
+          }
         </p>
         {renderComponent()}
       </header>
