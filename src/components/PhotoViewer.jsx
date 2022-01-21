@@ -2,19 +2,20 @@ import React, {useEffect} from 'react';
 import usePhotoViewer from '../hooks/PhotoViewerHook';
 import './PhotoViewer.css';
 
+
 const PhotoViewer = (props) => {
-    const pHook = usePhotoViewer();
+    const onExit = ([...args]) => {
+        props.onExit([...args])
+    }
+    
+    const pvHook = usePhotoViewer({onExit});
     useEffect( () => {
         const showPhotoViewer = async () => {
             const imageList = props.attachment.imageList;
             const options = props.attachment.options;
             const mode = props.attachment.mode;
             const startFrom = props.attachment.startFrom;
-            console.log(`imageList: ${JSON.stringify(imageList)}`);
-            console.log(`mode: ${mode}`);
-            console.log(`mode: ${startFrom}`);
-            console.log(`options: ${JSON.stringify(options)}`);
-            const ret = await pHook.show(imageList, mode, startFrom, options);
+            const ret = await pvHook.show(imageList, mode, startFrom, options);
         };
         showPhotoViewer();
     });

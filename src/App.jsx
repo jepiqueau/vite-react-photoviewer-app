@@ -2,6 +2,7 @@ import { useState } from 'react'
 import logo from './logo.svg'
 import './App.css'
 import PhotoViewer from './components/PhotoViewer'
+import StartFromIncrement from './components/StartFromIncrement'
 
 function App() {
   const imageList = [
@@ -20,67 +21,139 @@ function App() {
           {url: 'https://i.ibb.co/VYYPZGk/salmon.jpg', title: 'Salmon '},
         ];
   const options = {};
-    // options.title = false;
-    // options.share = false;
-    // options.transformer = "depth";
-    // options.spancount = 2
-    options.maxzoomscale = 3;
-    options.compressionquality = 0.6;
-    options.movieoptions = {mode: 'portrait', imagetime: 3};
-
-  const [mode, setMode] = useState("one");
+  // options.title = false;
+  // options.share = false;
+  // options.transformer = "depth";
+  // options.spancount = 2
+  options.maxzoomscale = 3;
+  options.compressionquality = 0.6;
+  options.movieoptions = {mode: 'portrait', imagetime: 3};
+  const max = imageList.length;
+  const [mode, setMode] = useState("");
   const [startFrom, setStartFrom] = useState(0);
-  const [isStart, setIsStart] = useState(true);
-  const changeMode = (mode) => {
-    if(mode === 'one') {
-      setMode("gallery");
-      setIsStart(false);
-    }
-    if(mode === 'gallery'){
-      setMode("slider");
-      setIsStart(true);
-    }
-    if(mode === 'slider') setMode("one");
+  const [isStart, setIsStart] = useState(false);
+  const [imageIndex, setImageIndex] = useState(-1);
+  const [message, setMessage] = useState("");
+
+  const handleOnExit = async (args) => {
+    const result = args[0];
+    if(args[1] != null) setImageIndex(args[1]);
+    if(args[2] != null) setMessage(args[2]);
   }
-  const changeStartFrom = (startFrom) => {
-    if( startFrom < imageList.length) {
-      setStartFrom(startFrom +1);
-    } else {
-      setStartFrom(0);
+  
+  const handleIncrement = () => {
+    setTimeout(
+      () =>  {
+        if(startFrom < max) {
+          setStartFrom(startFrom => startFrom + 1);
+        } else {
+          setStartFrom(0);
+        }
+        resetOuput();
+      },
+      500
+    );
+  
+  }
+
+  const handleDecrement = () => {
+    setTimeout(
+      () =>  {
+        if(startFrom > 1) {
+          setStartFrom(startFrom => startFrom - 1);
+        } else {
+          setStartFrom(0);
+        }
+        resetOuput();
+      },
+      500
+    );
+  }
+
+  const resetOuput = () => {
+    if(imageIndex > -1 || message.length > 0) {
+      setImageIndex(-1);
+      setMessage("");
     }
+  }
+  const changeMode = (mode) => {
+    if(mode.length === 0 ) {
+      setMode("one");
+      setStartFrom(0);
+      setIsStart(true);
+    } else if(mode === 'one') {
+      setMode("gallery");
+      setStartFrom(0);
+      setIsStart(false);    
+      resetOuput();
+    } else if(mode === 'gallery'){
+      setMode("slider");
+      setIsStart(true);    
+      resetOuput();
+    } else if(mode === 'slider') {
+      setMode("one");
+      setStartFrom(0);
+      resetOuput();
+    }
+  }
+  const renderOutput = () => {
+    if(imageIndex != -1 || message.length > 0) {
+
+      if(imageIndex != -1) {
+        return (
+          <div>
+            <p>last selected image {imageIndex}</p>
+          </div>
+        )
+      } else {
+        return (
+          <div>
+            <p>Error: {message}</p>
+          </div>
+        )
+      }
+    } else {
+      return null;
+    }
+
   }
   const renderComponent = () => {
-    let attachment = {};
-    if (mode === "one" || mode === "slider") {
-      options.title = false;
-      attachment.startFrom = startFrom;
-    } else if (mode === "gallery") {
-      options.title = true;
-      options.spancount = 3;
-    }
-    attachment.imageList = imageList;
-    attachment.mode = mode;
-    attachment.options = options;
-    return (
-        <PhotoViewer attachment={attachment} ></PhotoViewer>
-      )  
+    if(imageIndex === -1 && message.length === 0) {
+      let attachment = {};
+      if( mode.length === 0 ) return null;
+      if (mode === "one" || mode === "slider") {
+        if(startFrom == null) return null;
+        options.title = false;
+        attachment.startFrom = startFrom;
+      } else if (mode === "gallery") {
+        options.title = true;
+        options.spancount = 3;
+      }
+      attachment.imageList = imageList;
+      attachment.mode = mode;
+      attachment.options = options;
+      return (
+          <PhotoViewer attachment={attachment} onExit={handleOnExit}></PhotoViewer>
+      )
+    } else {
+      return null;
+    }  
   }
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>Hello Vite + React!</p>
-        <p>
-         <button type="button" onClick={() => changeMode(mode)}>
+        <div>
+          <button type="button" onClick={() => changeMode(mode)}>
             mode is: {mode}
           </button>
           {isStart &&
-          <button type="button" onClick={() => changeStartFrom(startFrom)}>
-          startFrom is: {startFrom}
-        </button>
-
+            <StartFromIncrement startFrom={startFrom} onAddIncrement={handleIncrement}
+                onSubstractIncrement={handleDecrement} />
           }
-        </p>
+          {renderOutput()}
+        </div>
         {renderComponent()}
       </header>
     </div>
