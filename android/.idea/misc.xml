@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../node_modules/@capacitor-community/photoviewer/android/src/main/res/layout/bridge_layout_main.xml" value="0.16458333333333333" />
+        <entry key="../node_modules/@capacitor-community/photoviewer/android/src/main/res/layout/fragment_screen_slide_page.xml" value="0.18489583333333334" />
+        <entry key="../node_modules/@capacitor-community/photoviewer/android/src/main/res/layout/fragment_touchview.xml" value="0.18489583333333334" />
+        <entry key="../node_modules/@capacitor-community/photoviewer/android/src/main/res/layout/item_gallery_image.xml" value="0.18489583333333334" />
         <entry key="../node_modules/@capacitor-community/photoviewer/android/src/main/res/layout/main_fragment.xml" value="0.1358695652173913" />
       </map>
     </option>

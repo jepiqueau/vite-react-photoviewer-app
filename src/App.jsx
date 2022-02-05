@@ -3,7 +3,7 @@ import logo from './logo.svg'
 import './App.css'
 import PhotoViewer from './components/PhotoViewer'
 import StartFromIncrement from './components/StartFromIncrement'
-
+import {base64Images} from './utils/base64Images'
 function App() {
   const imageList = [
           {url: 'https://i.ibb.co/wBYDxLq/beach.jpg', title: 'Beach Houses'},   
@@ -19,6 +19,7 @@ function App() {
           {url: 'https://i.ibb.co/dBCHzXQ/paris.jpg', title: 'Paris Eiffel'},
           {url: 'https://i.ibb.co/JKB0KPk/pizza.jpg', title: 'Pizza Time'},
           {url: 'https://i.ibb.co/VYYPZGk/salmon.jpg', title: 'Salmon '},
+          base64Images[0],
         ];
   const options = {};
   // options.title = false;
@@ -28,6 +29,7 @@ function App() {
   options.maxzoomscale = 3;
   options.compressionquality = 0.6;
   options.movieoptions = {mode: 'portrait', imagetime: 3};
+  options.backgroundcolor = 'ivory';
   const max = imageList.length;
   const [mode, setMode] = useState("");
   const [startFrom, setStartFrom] = useState(0);
